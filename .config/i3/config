@@ -215,8 +215,6 @@ bindsym $mod+b exec google-chrome
 bindsym $mod+Control+p exec powermenu
 bindsym $mod+Control+a exec "rofi -show drun"
 
-bindsym $mod+Control+l exec "i3lock -i $HOME/Pictures/Wallpapers/haikyuu.npg"
-
 # gaps
 gaps inner 15px
 gaps outer 5px 
@@ -230,3 +228,9 @@ hide_edge_borders smart
 exec_always nitrogen --restore
 exec --no-startup-id picom -b
 
+
+for_window [class="Google-chrome"] move container to workspace 1
+exec --no-startup-id google-chrome
+
+for_window [class="kitty"] move container to workspace 2
+exec --no-startup-id kitty

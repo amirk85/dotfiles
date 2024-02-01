@@ -36,7 +36,7 @@ alias w='nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers'
 # configs
 alias kittyconf='vim ~/.config/kitty/kitty.conf'
 alias i3conf='vim ~/.config/i3/config'
-alias vimconf='vim ~/.config/nvim'
+alias vimconf='cd ~/.config/nvim'
 
 # Navigation
 alias ..='cd ..'
