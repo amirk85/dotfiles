@@ -216,7 +216,7 @@ bindsym $mod+Control+p exec powermenu
 bindsym $mod+Control+a exec "rofi -show drun"
 
 # gaps
-gaps inner 15px
+gaps inner 10px
 gaps outer 5px 
 smart_gaps on
 
@@ -229,8 +229,4 @@ exec_always nitrogen --restore
 exec --no-startup-id picom -b
 
 
-for_window [class="Google-chrome"] move container to workspace 1
-exec --no-startup-id google-chrome
-
-for_window [class="kitty"] move container to workspace 2
-exec --no-startup-id kitty
+exec --no-startup-id i3-msg 'workspace 1; exec google-chrome-stable'

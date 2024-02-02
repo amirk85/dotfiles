@@ -8,8 +8,6 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/.config/zsh:$PATH"
 
-### ------------ SOURCE ------------ ###
-
 ### ------------ THEME ------------ ###
 # ZSH_THEME="awesomepanda"
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -36,7 +34,8 @@ alias w='nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers'
 # configs
 alias kittyconf='vim ~/.config/kitty/kitty.conf'
 alias i3conf='vim ~/.config/i3/config'
-alias vimconf='cd ~/.config/nvim'
+alias vimconf='cd ~/.config/nvim && vim'
+alias zshconf='vim ~/.zshrc'
 
 # Navigation
 alias ..='cd ..'
