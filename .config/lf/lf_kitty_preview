@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-file=$1
-w=$2
-h=$3
-x=$4
-y=$5
+
+file="$1"
+w="$2"
+h="$3"
+x="$4"
+y="$5"
 
 preview() {
     kitty +kitten icat --silent --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$1" < /dev/null > /dev/tty
@@ -11,35 +12,36 @@ preview() {
 
 TEMPDIR=~/.cache
 
-file="$1"; shift
-case "$(basename "$file" | tr '[A-Z]' '[a-z]')" in
-*.tar*) tar tf "$file" ;;
-*.zip) unzip -l "$file" ;;
-*.rar) unrar l "$file" ;;
-*.7z) 7z l "$file" ;;
-*.avi|*.mp4|*.mkv)
-	thumbnail="$TEMPDIR/thumbnail.png"
-	ffmpeg -y -i "$file" -vframes 1 "$thumbnail"
+mime_type=$(file --dereference --brief --mime-type -- "$file")
+
+if [[ "$mime_type" == *"application/x-tar"* ]]; then
+    tar tf "$file"
+elif [[ "$mime_type" == *"application/zip"* ]]; then
+    unzip -l "$file"
+elif [[ "$mime_type" == *"application/x-rar"* ]]; then
+    unrar l "$file"
+elif [[ "$mime_type" == *"application/x-7z-compressed"* ]]; then
+    7z l "$file"
+elif [[ "$mime_type" == *"video/"* ]]; then
+    thumbnail="$TEMPDIR/thumbnail.png"
+    ffmpeg -y -i "$file" -vframes 1 "$thumbnail"
     preview "$thumbnail"
-	;;
-*.pdf)
-	thumbnail="$TEMPDIR/thumbnail.png"
-	gs -o "$thumbnail" -sDEVICE=pngalpha -dLastPage=1 "$file" >/dev/null
+elif [[ "$mime_type" == *"application/pdf"* ]]; then
+    thumbnail="$TEMPDIR/thumbnail.png"
+    gs -o "$thumbnail" -sDEVICE=pngalpha -dLastPage=1 "$file" >/dev/null
     preview "$thumbnail"
-	;;
-*.jpg|*.jpeg|*.png|*.bmp)
+elif [[ "$mime_type" == *"image/"* ]]; then
     preview "$file"
-    ;;
-*.ttf|*.otf|*.woff)
-	thumbnail="$TEMPDIR/thumbnail.png"
-	fontpreview -i "$file" -o "$thumbnail"
-	preview "$thumbnail"
-	;;
-*.svg)
-	thumbnail="$TEMPDIR/thumbnail.png"
-	convert "$file" "$thumbnail"
-	preview "$thumbnail"
-	;;
-*) previewer "$file" ;;
-esac
-return 127 # nonzero retcode required for lf previews to reload
+elif [[ "$mime_type" == *"font/"* ]]; then
+    thumbnail="$TEMPDIR/thumbnail.png"
+    fontpreview -i "$file" -o "$thumbnail"
+    preview "$thumbnail"
+elif [[ "$mime_type" == *"image/svg+xml"* ]]; then
+    thumbnail="$TEMPDIR/thumbnail.png"
+    convert "$file" "$thumbnail"
+    preview "$thumbnail"
+else
+    batcat --style=plain --color=always --paging=never "$file"
+fi
+
+exit 127 # nonzero exit code required for lf previews to reload

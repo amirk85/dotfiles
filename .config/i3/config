@@ -46,10 +46,17 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Increase/Decrease volume
-bindsym $mod+plus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-bindsym $mod+minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-# mute speaker
-bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+# bindsym $mod+plus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+# bindsym $mod+minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+# # mute speaker
+# bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+
+# New Increase/Decrease volume 
+bindsym $mod+plus exec --no-startup-id pulsemixer --change-volume +10 --max-volume 100 
+bindsym $mod+minus exec --no-startup-id pulsemixer --change-volume -10 --max-volume 100 
+bindsym $mod+Shift+plus exec --no-startup-id pulsemixer --change-volume +10 --max-volume 300 
+bindsym $mod+Shift+minus exec --no-startup-id pulsemixer --change-volume -10 --max-volume 300 
+bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle 
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -62,7 +69,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Return exec kitty 
 
 # kill focused window
-bindsym $mod+q kill
+bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
 bindsym $mod+d exec --no-startup-id dmenu_run
@@ -227,6 +234,5 @@ hide_edge_borders smart
 # Autostart
 exec_always nitrogen --restore
 exec --no-startup-id picom -b
-
 
 exec --no-startup-id i3-msg 'workspace 1; exec google-chrome-stable'

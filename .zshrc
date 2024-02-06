@@ -16,20 +16,25 @@ plugins=(git sudo history encode64 copypath zsh-autosuggestions zsh-syntax-highl
 source $ZSH/oh-my-zsh.sh
 
 ### ------------ Navigation ------------ ###
-# tmux aliases
-alias tm='tmux -u'
-alias tmux='tmux -u'
-alias tma='tmux -u attach-session -t'
-alias tmn='tmux -u new-session -s'
-alias tmls='tmux list-sessions'
-alias tmk='tmux kill-session -t'
-alias ls="colorls"
 
 alias vim='nvim'
 alias c='clear'
 alias e='exit'
 alias bat="batcat"
 alias w='nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers'
+alias fd='fdfind'
+alias profileconf='vim ~/.profile'
+
+
+bindkey '^Z' autosuggest-accept
+
+# tmux aliases
+alias tm='tmux'
+alias tma='tmux attach-session -t'
+alias tmn='tmux new-session -s'
+alias tmls='tmux list-sessions'
+alias tmk='tmux kill-session -t'
+alias ls="colorls"
 
 # configs
 alias kittyconf='vim ~/.config/kitty/kitty.conf'
@@ -73,3 +78,5 @@ export PATH="$(go env GOPATH)/bin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+eval "$(zoxide init zsh)"
