@@ -23,15 +23,40 @@ cmd mkfile ${{
 }}
 
 # Archive bindings
+# cmd unarchive ${{
+#   case "$f" in
+#       *.zip) unzip "$f" ;;
+#       *.tar.gz) tar -xzvf "$f" ;;
+#       *.tar.bz2) tar -xjvf "$f" ;;
+#       *.tar) tar -xvf "$f" ;;
+#       *) echo "Unsupported format" ;;
+#   esac
+# }}
+
+
 cmd unarchive ${{
   case "$f" in
-      *.zip) unzip "$f" ;;
-      *.tar.gz) tar -xzvf "$f" ;;
-      *.tar.bz2) tar -xjvf "$f" ;;
-      *.tar) tar -xvf "$f" ;;
-      *) echo "Unsupported format" ;;
+      *.zip)
+          echo "Unzipping: $f"
+          unzip -d "$PWD" "$f" ;;
+      *.tar.gz)
+          echo "Extracting tar.gz: $f"
+          tar -xzvf "$f" ;;
+      *.tar.bz2)
+          echo "Extracting tar.bz2: $f"
+          tar -xjvf "$f" ;;
+      *.tar)
+          echo "Extracting tar: $f"
+          tar -xvf "$f" ;;
+      *)
+          echo "Unsupported format" ;;
   esac
 }}
+
+cmd zip %zip -r "$f.zip" $fx
+# cmd zip %zip -r "$f" "$f"
+cmd tar %tar cvf "$f.tar" "$f"
+cmd targz %tar cvzf "$f.tar.gz" "$f"
 
 # define a custom 'open' command
 cmd open &{{
@@ -79,10 +104,15 @@ cmd delete ${{
 # Bindings
 map d
 map m
+map a
 
 map c $vscodium "$f"
 
+map az zip
+map at tar
+map ag targz
 map au unarchive
+
 map ae $wine "$f"
 
 # Basic Functions
@@ -98,11 +128,11 @@ map md mkdir
 map C clear
 
 # vim like insert mode
-map A :rename; cmd-end # at the very end
+# map A :rename; cmd-end # at the very end
 map c push A<c-u> # new rename
 map I :rename; cmd-home # at the very beginning
 map i :rename # before extension
-map a :rename; cmd-right # after extension
+# map a :rename; cmd-right # after extension
 map V push :!nvim<enter>
 # Movement
 map gD cd ~/Documents

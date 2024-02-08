@@ -26,7 +26,7 @@ alias fd='fdfind'
 alias profileconf='vim ~/.profile'
 
 
-bindkey '^Z' autosuggest-accept
+bindkey '^;' autosuggest-accept
 
 # tmux aliases
 alias tm='tmux'
