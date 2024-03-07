@@ -24,7 +24,7 @@ alias bat="batcat"
 alias w='nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers'
 alias fd='fdfind'
 alias profileconf='vim ~/.profile'
-
+alias docker='sudo docker'
 
 bindkey '^;' autosuggest-accept
 
