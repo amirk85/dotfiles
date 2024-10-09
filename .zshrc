@@ -15,22 +15,28 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git sudo history encode64 copypath zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
+
+bindkey -s ^f "tmux-sessionizer\n"
+
 ### ------------ Navigation ------------ ###
 
 alias vim='nvim'
+alias javarun='f() { filename=$(basename "$1" .java); javac "$filename.java" && java "$filename"; }; f'
 alias c='clear'
 alias e='exit'
-alias bat="batcat"
+alias cat="batcat"
 alias w='nitrogen --set-zoom-fill --random ~/Pictures/Wallpapers'
 alias fd='fdfind'
 alias profileconf='vim ~/.profile'
 alias docker='sudo docker'
+alias py="python3"
+alias ts="ts-node"
 
 bindkey '^;' autosuggest-accept
 
 # tmux aliases
 alias tm='tmux'
-alias tma='tmux attach-session -t'
+alias tma='tmux attach'
 alias tmn='tmux new-session -s'
 alias tmls='tmux list-sessions'
 alias tmk='tmux kill-session -t'
@@ -70,7 +76,9 @@ alias upgrade='sudo apt-get upgrade'
 alias install='sudo apt-get install'
 alias remove='sudo apt-get remove'
 
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$(go env GOPATH)/bin:$PATH"
+export PATH=/usr/local/node-v16.15.1/bin:$PATH
 
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -79,3 +87,13 @@ export PATH="$(go env GOPATH)/bin:$PATH"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 eval "$(zoxide init zsh)"
+export GO111MODULE=on
+export GO111MODULE=on
+export GO111MODULE=on
+export PATH=$PATH:$(go env GOPATH)/bin
+export PATH="$HOME/.cargo/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
