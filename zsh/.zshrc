@@ -1,8 +1,11 @@
 # Initialization code that may require console input (password prompts, [y/n] confirmations, etc.) must go above this block; everything else may go below.
 
 ### ------------ EXPORT ------------ ###
+export PATH="$HOME/.local/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export PATH="$HOME/.config/zsh:$PATH"
+export NVM_DIR="$HOME/.nvm"
+export TERMINAL="ghostty"
 
 ### ------------ THEME ------------ ###
 ZSH_THEME="robbyrussell"
@@ -16,6 +19,7 @@ bindkey -s ^f "tmux-sessionizer\n"
 ### ------------ Navigation ------------ ###
 
 alias vim='nvim'
+alias nano="nvim"
 # alias c='clear'
 # alias e='exit'
 alias bat="batcat"
@@ -25,6 +29,8 @@ alias profileconf='vim ~/.profile'
 alias docker='sudo docker'
 alias py="python3"
 alias ts="ts-node"
+
+alias n='nnn -P p'
 
 # bindkey '^;' autosuggest-accept
 
@@ -58,13 +64,13 @@ alias update='sudo pacman -Syu'
 alias install='sudo pacman -S'
 alias remove='sudo pacman -Rns'
 
-export PATH="$HOME/.local/bin:$PATH"
+
+alias books="~/Documents/books"
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export TERMINAL=kitty
 eval "$(zoxide init zsh)"

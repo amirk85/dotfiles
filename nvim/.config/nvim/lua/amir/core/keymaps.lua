@@ -9,7 +9,6 @@ keymap.set("n", "<Leader>o", "o<Esc>", opts) -- add new line below without leavi
 keymap.set("n", "<Leader>O", "O<Esc>", opts) -- add new line above without leaving normal mode
 
 keymap.set("n", "<C-a>", "ggVG") -- select all
-keymap.set("n", "<leader>X", ":!chmod +x %<CR>") -- make file executable
 keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>") -- open tmux sessionizer
 
 keymap.set("n", "E", "$", { noremap = false }) -- move to end of line
