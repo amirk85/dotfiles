@@ -1,17 +1,16 @@
 return {
   "stevearc/conform.nvim",
   lazy = true,
-  event = { "BufReadPre", "BufNewFile" }, -- Triggered on file read or new file creation
+  event = { "BufReadPre", "BufNewFile" }, -- Load only when opening or creating a file
   config = function()
     local conform = require("conform")
 
     conform.setup({
       formatters_by_ft = {
-        javascript = { "dprint", "prettierd", "prettier", stop_after_first = true },
-        javascriptf = { "dprint", "prettier", "prettierd", stop_after_first = true },
-        typescript = { "dprint", "prettierd", "prettier", stop_after_first = true },
-        javascriptreact = { "dprint" },
-        typescriptreact = { "dprint" },
+        javascript = { "dprint", "prettierd", "prettier" },
+        typescript = { "dprint", "prettierd", "prettier" },
+        javascriptreact = { "dprint", "prettierd", "prettier" },
+        typescriptreact = { "dprint", "prettierd", "prettier" },
         css = { "prettier" },
         html = { "prettier" },
         json = { "prettier" },
@@ -20,16 +19,26 @@ return {
         lua = { "stylua" },
         python = { "isort", "black" },
         go = { "goimports", "gofmt" },
+        gotmpl = { "gofmt", "gofumpt" }, -- Add Go template support
         sql = { "sql-formatter", "sqlfmt" },
+        sh = { "shfmt" }, -- Added Shell Script formatter
+        toml = { "prettier" }, -- Added TOML support
       },
+      -- format_on_save = { -- Optional: Enable auto-format on save
+      --   timeout_ms = 1500,
+      --   lsp_fallback = true,
+      -- },
+      notify_on_error = false, -- Prevent spammy error notifications
+      stop_after_first = true, -- Stop after first successful formatter
     })
 
+    -- Keymap for manual formatting
     vim.keymap.set({ "n", "v" }, "<leader>fm", function()
       conform.format({
         lsp_fallback = true,
         async = false,
         timeout_ms = 1000,
       })
-    end, { desc = "Format file or selected range" })
+    end, { desc = "Format file or selection", silent = true })
   end,
 }

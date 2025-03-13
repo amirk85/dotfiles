@@ -14,6 +14,7 @@ return {
         highlight = { enable = true }, -- Enable syntax highlighting
         indent = { enable = true }, -- Enable indentation
         autotag = { enable = true }, -- Enable autotagging
+        -- autotag = { "html" }, -- Enable autotagging
         ensure_installed = {
           "json",
           "javascript",
@@ -43,6 +44,11 @@ return {
             node_decremental = "<bs>",
           },
         },
+        -- ✅ Add these fields to prevent warnings
+        sync_install = false, -- Default is false
+        auto_install = true, -- Auto-install missing parsers
+        ignore_install = {}, -- No parsers to ignore
+        modules = {}, -- Empty modules (default)
       })
 
       -- Enable ts-context-commentstring plugin for JSX/TSX comments
