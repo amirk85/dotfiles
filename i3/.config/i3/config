@@ -114,7 +114,7 @@ default_border pixel 1
 hide_edge_borders smart
 
 # Keybindings for specific applications
-bindsym $mod+Return exec ghostty
+bindsym $mod+Return exec ghostty -e zsh
 bindsym $mod+Shift+f exec nautilus
 bindsym $mod+b exec brave
 bindsym $mod+Control+p exec ~/.config/rofi/rofi-powermenu.sh
