@@ -10,7 +10,6 @@ exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id picom -b
-exec --no-startup-id i3-msg 'workspace 1; exec google-chrome https://www.youtube.com'
 
 # Volume control
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -20,9 +19,9 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # PulseAudio with pulsemixer
-bindsym $mod+plus exec --no-startup-id pulsemixer --change-volume +10 --max-volume 100
+bindsym $mod+equal exec --no-startup-id pulsemixer --change-volume +10 --max-volume 100
 bindsym $mod+minus exec --no-startup-id pulsemixer --change-volume -10 --max-volume 100
-bindsym $mod+Shift+plus exec --no-startup-id pulsemixer --change-volume +10 --max-volume 300
+bindsym $mod+Shift+equal exec --no-startup-id pulsemixer --change-volume +10 --max-volume 300
 bindsym $mod+Shift+minus exec --no-startup-id pulsemixer --change-volume -10 --max-volume 300
 bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym $mod+Control+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
