@@ -12,11 +12,11 @@ return {
 
       opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
         wrap_results = true,
-        file_ignore_patterns = { "node_modules", "venv", "^.git" },
+        file_ignore_patterns = { "node_modules", "venv", "^.git", "dist" },
         sorting_strategy = "ascending",
         layout_config = {
           horizontal = {
-            prompt_position = "bottom", -- top, bottom
+            prompt_position = "top", -- top, bottom
             preview_width = 0.5,
           },
           width = 0.9,
