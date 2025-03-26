@@ -24,15 +24,11 @@ alias nano="nvim"
 # alias e='exit'
 alias bat="batcat"
 alias w='nitrogen --set-zoom-fill --random ~/Pictures/wallpapers'
-# alias fd='fdfind'
+alias fd='fdfind'
 alias profileconf='vim ~/.profile'
 alias docker='sudo docker'
 alias py="python3"
 alias ts="ts-node"
-
-alias n='nnn -P p'
-
-# bindkey '^;' autosuggest-accept
 
 # # tmux aliases
 alias tm='tmux'
@@ -43,6 +39,7 @@ alias tmk='tmux kill-session -t'
 
 # configs
 alias kittyconf='vim ~/.config/kitty/kitty.conf'
+alias ghosttyconf='vim ~/.config/ghostty/config'
 alias i3conf='vim ~/.config/i3/config'
 alias vimconf='cd ~/.config/nvim && vim'
 alias zshconf='vim ~/.zshrc'
@@ -74,3 +71,5 @@ alias books="~/Documents/books"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 eval "$(zoxide init zsh)"
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/share/nvm/init-nvm.sh" ] && source "/usr/share/nvm/init-nvm.sh"
