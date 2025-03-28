@@ -16,22 +16,24 @@ return {
 			},
 			ensure_installed = {
 				-- Language Servers
-				"pyright",                    -- Python
-				"tsserver",                   -- TypeScript/JavaScript
-				"gopls",                      -- Go
-				"sumneko_lua",                -- Lua
+				"pyright",                -- Python
+				"tsserver",               -- TypeScript/JavaScript
+				"gopls",                  -- Go
+				"sumneko_lua",            -- Lua
+				"clangd",                 -- C/C++ LSP
 				-- Linters
-				"flake8",                     -- Python Linter
-				"eslint_d",                   -- JavaScript/TypeScript Linter
-				"golangci_lint",              -- Go Linter
+				"flake8",                 -- Python Linter
+				"eslint_d",               -- JavaScript/TypeScript Linter
+				"golangci_lint",          -- Go Linter
+				"clang-format",           -- C/C++ Formatter
 				-- Formatters
-				"black",                      -- Python Formatter
-				"prettier",                   -- Code Formatter
-				"stylua",                     -- Lua Formatter
-				"shfmt",                      -- Shell Script Formatter
+				"black",                  -- Python Formatter
+				"prettier",               -- Code Formatter
+				"stylua",                 -- Lua Formatter
+				"shfmt",                  -- Shell Script Formatter
 				-- Additional Tools
 				"dockerfile_language_server", -- Dockerfile support
-				"yaml-language-server",       -- YAML support
+				"yaml-language-server",   -- YAML support
 			},
 		})
 	end,

@@ -102,9 +102,8 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
 
-
-exec --no-startup-id nitrogen --restore
-exec_always nitrogen --set-zoom-fill --random ~/Pictures/wallpapers
+exec --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
+exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
 
 # gaps inner 4px
 # gaps outer 4px
@@ -118,5 +117,5 @@ bindsym $mod+Shift+f exec nautilus
 bindsym $mod+b exec brave
 bindsym $mod+Control+p exec ~/.config/rofi/rofi-powermenu.sh
 bindsym $mod+Control+a exec "rofi -show drun"
-bindsym $mod+w exec "nitrogen --set-zoom-fill --random ~/Pictures/wallpapers"
+bindsym $mod+w exec "feh --bg-scale --randomize ~/Pictures/wallpapers/*"
 bindsym Control+Shift+n nop

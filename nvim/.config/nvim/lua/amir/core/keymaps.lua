@@ -57,9 +57,9 @@ keymap.set("n", "<C-w><down>", "<C-w>-") -- resize window down
 -- Tabs Management
 keymap.set("n", "<leader>tn", ":tabnext<Return>", opts) -- go to next tab
 keymap.set("n", "<leader>tp", ":tabprev<Return>", opts) -- go to previous tab
-keymap.set("n", "<leader>tn", ":tabnew<Return>", opts) -- open new tab
 keymap.set("n", "<leader>tx", ":tabclose<Return>", opts) -- close current tab
 keymap.set("n", "<leader>to", ":tabonly<Return>", opts) -- close all other tabs
 
 -- Paste over visual selection without overwriting register
 keymap.set("x", "<leader>p", [["_dP]])
+keymap.set("n", "<C-j>", ":b#<CR>", opts)

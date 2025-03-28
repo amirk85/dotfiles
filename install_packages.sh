@@ -28,6 +28,7 @@ PACMAN_PACKAGES=(
 		"ghostty"
 		"elisa"
 		"rofi"
+		"feh"
 		"zoxide"
 )
 

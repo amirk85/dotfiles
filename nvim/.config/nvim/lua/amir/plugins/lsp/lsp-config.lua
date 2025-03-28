@@ -9,13 +9,31 @@ return {
     local lspconfig = require("lspconfig")
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_nvim_lsp.default_capabilities()
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-    local servers = { "html", "tsserver", "cssls", "tailwindcss", "gopls", "pyright", "templ", "lua_ls" }
 
-    -- Set diagnostic signs
-    for type, icon in pairs(signs) do
-      vim.fn.sign_define("DiagnosticSign" .. type, { text = icon, texthl = "DiagnosticSign" .. type })
+    -- Define diagnostic signs
+    local signs = {
+      { name = "DiagnosticSignError", text = " " },
+      { name = "DiagnosticSignWarn", text = " " },
+      { name = "DiagnosticSignInfo", text = "󰠠 " },
+      { name = "DiagnosticSignHint", text = " " },
+    }
+    for _, sign in ipairs(signs) do
+      vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name })
     end
+
+    -- Configure diagnostics (enable inline messages)
+    vim.diagnostic.config({
+      virtual_text = {
+        prefix = "●", -- Customize the prefix (e.g., "■", "▶", "◆")
+        spacing = 2,
+      },
+      signs = true, -- Enable gutter signs
+      underline = true, -- Underline diagnostic lines
+      update_in_insert = false, -- Prevent updates while typing
+      severity_sort = true, -- Sort by severity
+    })
+
+    local servers = { "html", "tsserver", "cssls", "tailwindcss", "gopls", "pyright", "templ", "lua_ls" }
 
     -- LSP key mappings
     local on_attach = function(_, bufnr)
@@ -34,7 +52,7 @@ return {
       keymap("n", "K", vim.lsp.buf.hover, opts("Hover documentation"))
     end
 
-    -- Set up LSP servers with tsserver check
+    -- Set up LSP servers
     for _, server in ipairs(servers) do
       local lsp_server = server
       if lsp_server == "tsserver" then
