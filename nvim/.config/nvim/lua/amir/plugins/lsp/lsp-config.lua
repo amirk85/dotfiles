@@ -10,30 +10,26 @@ return {
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
-    -- Define diagnostic signs
-    local signs = {
-      { name = "DiagnosticSignError", text = " " },
-      { name = "DiagnosticSignWarn", text = " " },
-      { name = "DiagnosticSignInfo", text = "󰠠 " },
-      { name = "DiagnosticSignHint", text = " " },
-    }
-    for _, sign in ipairs(signs) do
-      vim.fn.sign_define(sign.name, { text = sign.text, texthl = sign.name })
-    end
-
-    -- Configure diagnostics (enable inline messages)
+    -- Configure diagnostic signs
     vim.diagnostic.config({
       virtual_text = {
         prefix = "●", -- Customize the prefix (e.g., "■", "▶", "◆")
         spacing = 2,
       },
-      signs = true, -- Enable gutter signs
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = " ",
+          [vim.diagnostic.severity.WARN] = " ",
+          [vim.diagnostic.severity.INFO] = "󰠠 ",
+          [vim.diagnostic.severity.HINT] = " ",
+        },
+      },
       underline = true, -- Underline diagnostic lines
       update_in_insert = false, -- Prevent updates while typing
       severity_sort = true, -- Sort by severity
     })
 
-    local servers = { "html", "tsserver", "cssls", "tailwindcss", "gopls", "pyright", "templ", "lua_ls" }
+    local servers = { "html", "tsserver", "cssls", "tailwindcss", "gopls", "pyright", "templ", "lua_ls", "clangd" }
 
     -- LSP key mappings
     local on_attach = function(_, bufnr)
@@ -47,8 +43,15 @@ return {
       keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
       keymap("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename symbol"))
       keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts("Show buffer diagnostics"))
-      keymap("n", "[d", vim.diagnostic.goto_prev, opts("Go to previous diagnostic"))
-      keymap("n", "]d", vim.diagnostic.goto_next, opts("Go to next diagnostic"))
+
+      keymap("n", "[d", function()
+        vim.diagnostic.jump({ count = -1 })
+      end, opts("Go to previous diagnostic"))
+
+      keymap("n", "]d", function()
+        vim.diagnostic.jump({ count = 1 })
+      end, opts("Go to next diagnostic"))
+
       keymap("n", "K", vim.lsp.buf.hover, opts("Hover documentation"))
     end
 
@@ -70,9 +73,7 @@ return {
       })
     end
 
-    -- Handlers for hover and signature
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-    vim.lsp.handlers["textDocument/signatureHelp"] =
-      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+    -- Set default border style for floating windows
+    vim.o.winborder = "rounded"
   end,
 }

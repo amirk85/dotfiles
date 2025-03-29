@@ -1,16 +1,4 @@
 return {
-  --todo comments
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
-
-  -- dressing
-  {
-    "stevearc/dressing.nvim",
-    event = "VeryLazy",
-  },
-  --
   -- colorizer
   {
     "NvChad/nvim-colorizer.lua",
@@ -48,44 +36,6 @@ return {
       vim.o.timeout = true
       vim.o.timeoutlen = 500
     end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-  },
-
-  -- alpha dashboard
-
-  {
-    "goolord/alpha-nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-
-    config = function()
-      local alpha = require("alpha")
-      local dashboard = require("alpha.themes.startify")
-
-      dashboard.section.header.val = {
-        [[                                                                       ]],
-        [[                                                                       ]],
-        [[                                                                       ]],
-        [[                                                                       ]],
-        [[                                                                     ]],
-        [[       ████ ██████           █████      ██                     ]],
-        [[      ███████████             █████                             ]],
-        [[      █████████ ███████████████████ ███   ███████████   ]],
-        [[     █████████  ███    █████████████ █████ ██████████████   ]],
-        [[    █████████ ██████████ █████████ █████ █████ ████ █████   ]],
-        [[  ███████████ ███    ███ █████████ █████ █████ ████ █████  ]],
-        [[ ██████  █████████████████████ ████ █████ █████ ████ ██████ ]],
-        [[                                                                       ]],
-        [[                                                                       ]],
-        [[                                                                       ]],
-      }
-
-      alpha.setup(dashboard.opts)
-    end,
+    opts = {},
   },
 }
