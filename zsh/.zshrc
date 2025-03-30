@@ -65,8 +65,15 @@ alias remove='sudo pacman -Rns'
 
 alias books="~/Documents/books"
 
+runcpp() {
+    filename="${1:-main.cpp}"  # Default to main.cpp if no argument is given
+    output="${filename%.cpp}"  # Remove .cpp extension for output file name
+    g++ "$filename" -o "$output" && ./"$output"
+}
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /usr/share/fzf/key-bindings.zsh
 
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
