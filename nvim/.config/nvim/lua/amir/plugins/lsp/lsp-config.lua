@@ -38,11 +38,8 @@ return {
       end
       local keymap = vim.keymap.set
 
-      keymap("n", "gR", "<cmd>Telescope lsp_references<CR>", opts("Show references"))
-      keymap("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts("Go to definition"))
       keymap({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
       keymap("n", "<leader>rn", vim.lsp.buf.rename, opts("Rename symbol"))
-      keymap("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", opts("Show buffer diagnostics"))
 
       keymap("n", "[d", function()
         vim.diagnostic.jump({ count = -1 })

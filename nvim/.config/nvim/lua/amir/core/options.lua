@@ -10,7 +10,8 @@ opt.shiftwidth = 2
 opt.smartindent = true
 
 opt.wrap = false -- disable line wrapping
-opt.winbar = "%=%m %t" -- shows buffer name at top right
+-- opt.winbar = "%=%m %t" -- shows buffer name at top right
+opt.winbar = "%m %t" -- Left-aligned buffer name
 opt.smartindent = true
 
 -- search settings

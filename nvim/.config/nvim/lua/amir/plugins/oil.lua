@@ -100,9 +100,5 @@ return {
     keymap.set("n", "<leader>ee", function()
       oil.toggle_float()
     end, { silent = true, noremap = true, desc = "Oil" })
-
-    keymap.set("n", "<leader>E", function()
-      oil.toggle_float(".")
-    end, { silent = true, noremap = true, desc = "Oil cwd" })
   end,
 }
