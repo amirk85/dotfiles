@@ -26,6 +26,9 @@ bindsym $mod+Shift+minus exec --no-startup-id pulsemixer --change-volume -10 --m
 bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym $mod+Control+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+
+for_window [class="steam_proton"] floating disable, fullscreen enable
+
 # Floating windows
 floating_modifier $mod
 tiling_drag modifier titlebar

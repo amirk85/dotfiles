@@ -5,6 +5,7 @@ PACMAN_PACKAGES=(
     "neovim"
 		"rofi"
 		"zsh"
+		"pulsemixer"
 		"zsh-completions"
 		"zsh-syntax-highlighting"
 		"zsh-autosuggestions"
