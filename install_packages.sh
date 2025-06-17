@@ -1,46 +1,51 @@
 #!/bin/bash
 
-# Define the list of packages
+# Define Pacman packages
 PACMAN_PACKAGES=(
-    "neovim"
-		"rofi"
-		"zsh"
-		"pulsemixer"
-		"zsh-completions"
-		"zsh-syntax-highlighting"
-		"zsh-autosuggestions"
-		"zsh-history-substring-search"
-    "git"
-		"curl"
-		"wget"
-		"python"
-		"nvm"
-		"go"
-		"gopls"
-    "htop"
-		"fastfetch"
-    "zsh"
-    "fzf"
-    "bat"
-    "ripgrep"
-    "fd"
-    "tmux"
-    "i3"
-		"ghostty"
-		"elisa"
-		"rofi"
-		"feh"
-		"zoxide"
+    # Shell & terminal
+    zsh zsh-completions zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search
+    tmux
+    pulsemixer
+		stow
+    fastfetch
+    fzf
+    bat
+    ripgrep
+    fd
+    htop
+    curl
+    wget
+    git
+    python
+    go
+    gopls
+    nvm
+
+    # Neovim & related tools
+    neovim
+    lua-language-server
+    nodejs npm
+    clang   # For C/C++ LSP and Treesitter parsers that need compilation
+    gcc     # For building various tools
+
+    # Window manager & desktop tools
+    i3
+    rofi
+    feh
+    ghostty
+    elisa
+    zoxide
 )
 
+# Define AUR packages
 AUR_PACKAGES=(
-    "brave-bin"
-    "visual-studio-code-bin"
-		"neulitus"
+    brave-bin
+    visual-studio-code-bin
+		nautilus
 )
 
-# Install yay if not found
-if ! command -v yay &> /dev/null; then
+# Install yay if not present
+if ! command -v yay &>/dev/null; then
     echo "yay not found. Installing yay..."
     sudo pacman -S --needed --noconfirm base-devel git
     git clone https://aur.archlinux.org/yay.git
@@ -50,28 +55,27 @@ if ! command -v yay &> /dev/null; then
     rm -rf yay
 fi
 
-# Function to install pacman packages
+# Function: Install Pacman packages
 install_pacman_packages() {
     echo "Updating system and installing Pacman packages..."
-    sudo pacman -Syu --noconfirm  # Update system
-
+    sudo pacman -Syu --noconfirm
     for pkg in "${PACMAN_PACKAGES[@]}"; do
         echo "Installing $pkg..."
-        sudo pacman -S --noconfirm --needed "$pkg" || echo "Failed to install $pkg, skipping..."
+        sudo pacman -S --needed --noconfirm "$pkg" || echo "⚠️ Failed to install $pkg, skipping..."
     done
 }
 
-# Function to install AUR packages
+# Function: Install AUR packages
 install_aur_packages() {
     echo "Installing AUR packages..."
     for pkg in "${AUR_PACKAGES[@]}"; do
         echo "Installing $pkg..."
-        yay -S --noconfirm --needed "$pkg" || echo "Failed to install $pkg, skipping..."
+        yay -S --needed --noconfirm "$pkg" || echo "⚠️ Failed to install $pkg, skipping..."
     done
 }
 
-# Run installations
+# Run
 install_pacman_packages
 install_aur_packages
 
-echo "All packages processed!"
+echo "✅ All packages processed!"

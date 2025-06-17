@@ -27,7 +27,14 @@ bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ tog
 bindsym $mod+Control+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 
+# Resize
+bindsym $mod+Ctrl+h resize shrink width 10 px or 10 ppt
+bindsym $mod+Ctrl+l resize grow width 10 px or 10 ppt
+bindsym $mod+Ctrl+j resize grow height 10 px or 10 ppt
+bindsym $mod+Ctrl+k resize shrink height 10 px or 10 ppt
+
 for_window [class="steam_proton"] floating disable, fullscreen enable
+for_window [window_type="normal"] floating disable
 
 # Floating windows
 floating_modifier $mod
@@ -107,6 +114,7 @@ client.background       #ffffff
 
 exec --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
 exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
+exec_always --no-startup-id autotiling
 
 # gaps inner 4px
 # gaps outer 4px
