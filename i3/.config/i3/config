@@ -5,11 +5,6 @@ set $mod Mod1
 # Font settings
 font pango:JetBrains Mono 8
 
-# Autostart applications
-exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id nm-applet
-exec --no-startup-id picom -b
 
 # Volume control
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -98,10 +93,11 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # Status bar
-bar {
-    status_command i3status --config ~/.config/i3/i3status.conf
-    position top
-}
+# bar {
+#     status_command i3status --config ~/.config/i3/i3status.conf
+#     font pango:jetbrains mono 10
+#     position top
+# }
 
 # Client borders and gaps
 client.focused          #4c7899 #285577 #ffffff #2e9ef4   #78ef1c
@@ -111,21 +107,28 @@ client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 client.background       #ffffff
 
-
-exec --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
-exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
-exec_always --no-startup-id autotiling
-
 # gaps inner 4px
 # gaps outer 4px
 smart_gaps off
 default_border pixel 1
 hide_edge_borders smart
 
+# Autostart applications
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 120
+exec --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
+exec_always --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
+exec_always --no-startup-id autotiling
+exec_always --no-startup-id sh -c "sleep 1 && setxkbmap -option caps:escape"
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 # Keybindings for specific applications
 bindsym $mod+Return exec ghostty -e zsh
 bindsym $mod+Shift+f exec nautilus
-bindsym $mod+b exec brave
+bindsym $mod+b exec firefox
 bindsym $mod+Control+p exec ~/.config/rofi/rofi-powermenu.sh
 bindsym $mod+Control+a exec "rofi -show drun"
 bindsym $mod+w exec "feh --bg-scale --randomize ~/Pictures/wallpapers/*"

@@ -12,7 +12,9 @@ PACMAN_PACKAGES=(
     bat
     ripgrep
     fd
-    htop
+    btop
+		xclip
+		xrandr
     curl
     wget
     git
@@ -20,6 +22,8 @@ PACMAN_PACKAGES=(
     go
     gopls
     nvm
+		mpv
+		vlc
 
     # Neovim & related tools
     neovim

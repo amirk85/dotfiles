@@ -18,11 +18,13 @@ bindkey -s ^f "tmux-sessionizer\n"
 
 ### ------------ Navigation ------------ ###
 
+alias play='mpv --no-video'
+
 alias vim='nvim'
 alias nano="nvim"
 # alias c='clear'
 # alias e='exit'
-alias bat="batcat"
+# alias bat="batcat"
 # alias w='nitrogen --set-zoom-fill --random ~/Pictures/wallpapers'
 alias w='feh --bg-scale --randomize ~/Pictures/wallpapers/*'
 alias fd='fdfind'

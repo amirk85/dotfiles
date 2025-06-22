@@ -68,7 +68,6 @@ else
     # Use a more robust directory search with better error handling
     search_dirs=(
         "$HOME/personal"  # Default search location
-        "$HOME/work"      # Add more common directories here
         "$HOME/projects"
     )
     
