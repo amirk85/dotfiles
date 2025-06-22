@@ -7,6 +7,8 @@ PACMAN_PACKAGES=(
     tmux
     pulsemixer
 		stow
+		dunst
+		rmpc
     fastfetch
     fzf
     bat
@@ -43,7 +45,6 @@ PACMAN_PACKAGES=(
 
 # Define AUR packages
 AUR_PACKAGES=(
-    brave-bin
     visual-studio-code-bin
 		nautilus
 )
