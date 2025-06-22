@@ -6,6 +6,7 @@ PACMAN_PACKAGES=(
     zsh zsh-completions zsh-syntax-highlighting zsh-autosuggestions zsh-history-substring-search
     tmux
     pulsemixer
+		pacman-contrib
 		stow
 		dunst
 		rmpc

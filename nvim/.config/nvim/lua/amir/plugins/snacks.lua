@@ -19,7 +19,7 @@ return {
     indent = { enabled = true },
     input = { enabled = true },
     notifier = { enabled = true, timeout = 3000 },
-    -- picker = { enabled = true, hidden = true, ignored = true, exclude = { "node_modules", ".git", ".next", ".dist" } },
+    picker = { enabled = true, hidden = true, ignored = true, exclude = { "node_modules", ".git", ".next", ".dist" } },
     quickfile = { enabled = true },
     scope = { enabled = true },
     -- scroll = { enabled = true }/,
@@ -63,13 +63,13 @@ return {
       end,
       desc = "Notification History",
     },
-    -- {
-    --   "<leader>e",
-    --   function()
-    --     Snacks.explorer()
-    --   end,
-    --   desc = "File Explorer",
-    -- },
+    {
+      "<leader>e",
+      function()
+        Snacks.explorer()
+      end,
+      desc = "File Explorer",
+    },
     -- find
     {
       "<leader>fb",
