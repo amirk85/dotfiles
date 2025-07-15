@@ -5,3 +5,7 @@
 [core]
     editor = nvim  # Change this to your preferred editor (vim, nano, etc.)
     autocrlf = input  # Ensures proper line endings on Linux
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true

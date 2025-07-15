@@ -1,3 +1,5 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zshrc.pre.zsh"
 # ------------------------------------------
 # Initialization (before sourcing anything)
 # ------------------------------------------
@@ -90,3 +92,6 @@ runcpp() {
     output="${filename%.cpp}"  # Remove .cpp extension for output file name
     g++ "$filename" -o "$output" && ./"$output"
 }
+
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/.local/share/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/.local/share/amazon-q/shell/zshrc.post.zsh"
