@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+STEP=0.1  # Brightness change per step
+STATE_FILE="/tmp/.xrandr_brightness"
+
+# Auto-detect primary or first connected display
+DISPLAY_NAME=$(xrandr | awk '/ connected/{print $1; exit}')
+
+# Fallback if detection fails
+[ -z "$DISPLAY_NAME" ] && exit 1
+
+# Load current brightness or assume 1.0
+if [[ -f "$STATE_FILE" ]]; then
+    current=$(cat "$STATE_FILE")
+else
+    current=1.0
+fi
+
+# Calculate new brightness
+if [[ "$1" == "up" ]]; then
+    new=$(awk "BEGIN {print ($current + $STEP > 1.0) ? 1.0 : $current + $STEP}")
+elif [[ "$1" == "down" ]]; then
+    new=$(awk "BEGIN {print ($current - $STEP < 0.1) ? 0.1 : $current - $STEP}")
+else
+    exit 1
+fi
+
+# Apply via xrandr
+xrandr --output "$DISPLAY_NAME" --brightness "$new"
+
+# Save updated brightness
+echo "$new" > "$STATE_FILE"
+
+# Show notify
+percent=$(awk "BEGIN {print int($new * 100)}")
+notify-send "Brightness: $percent%" -t 1000

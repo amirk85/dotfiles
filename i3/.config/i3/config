@@ -1,0 +1,158 @@
+# Set modifier keys
+set $mod Mod1
+# set $mod Mod4 # Super
+
+# Font settings
+font pango:JetBrains Mono 8
+
+
+# Volume control
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# PulseAudio with pulsemixer
+bindsym $mod+equal exec --no-startup-id pulsemixer --change-volume +10 --max-volume 100
+bindsym $mod+minus exec --no-startup-id pulsemixer --change-volume -10 --max-volume 100
+bindsym $mod+Shift+equal exec --no-startup-id pulsemixer --change-volume +10 --max-volume 300
+bindsym $mod+Shift+minus exec --no-startup-id pulsemixer --change-volume -10 --max-volume 300
+bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym $mod+Control+m exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+
+
+# Resize
+bindsym $mod+Ctrl+h resize shrink width 10 px or 10 ppt
+bindsym $mod+Ctrl+l resize grow width 10 px or 10 ppt
+bindsym $mod+Ctrl+j resize grow height 10 px or 10 ppt
+bindsym $mod+Ctrl+k resize shrink height 10 px or 10 ppt
+
+for_window [class="steam_proton"] floating disable, fullscreen enable
+for_window [window_type="normal"] floating disable
+
+# Floating windows
+floating_modifier $mod
+tiling_drag modifier titlebar
+
+# Window management
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec dmenu_run
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Shift+h mark tmp; focus left;  swap container with mark tmp; unmark tmp
+bindsym $mod+Shift+l mark tmp; focus right; swap container with mark tmp; unmark tmp
+bindsym $mod+Shift+j mark tmp; focus down;  swap container with mark tmp; unmark tmp
+bindsym $mod+Shift+k mark tmp; focus up;    swap container with mark tmp; unmark tmp
+bindsym $mod+s split h
+bindsym $mod+v split v
+bindsym $mod+f fullscreen toggle
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+space floating toggle
+# bindsym $mod+space focus mode_toggle
+
+# Workspace management
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+#bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# Status bar
+# bar {
+#     status_command i3status --config ~/.config/i3/i3status.conf
+#     font pango:jetbrains mono 10
+#     position top
+# }
+
+# Client borders and gaps
+client.focused          #f38ba8 #f38ba8 #cdd6f4 #f38ba8 #f38ba8
+client.focused_inactive #45475a #45475a #cdd6f4 #45475a #45475a
+client.unfocused        #313244 #313244 #6c7086 #313244 #313244
+client.urgent           #fab387 #fab387 #1e1e2e #fab387 #fab387
+client.placeholder      #1e1e2e #1e1e2e #cdd6f4 #1e1e2e #1e1e2e
+client.background       #1e1e2e
+
+gaps inner 8
+gaps outer 8
+smart_gaps on
+default_border pixel 2
+hide_edge_borders smart
+
+for_window [class="ghostty"] border pixel 2
+
+# Autostart applications
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 120
+exec --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
+exec --no-startup-id sh ~/.fehbg
+exec --no-startup-id dunst
+exec ~/scripts/caps_to_esc
+
+exec_always --no-startup-id autotiling
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id sh -c "sleep 1 && blueman-applet"
+
+# Keybindings for specific applications
+bindsym Control+Shift+n nop
+
+bindsym $mod+Return exec ghostty -e zsh
+bindsym $mod+Shift+f exec nautilus
+bindsym $mod+b exec zen-browser
+bindsym $mod+Shift+p exec ~/.config/rofi/rofi-powermenu.sh
+bindsym $mod+space exec "rofi -show drun"
+bindsym $mod+w exec "feh --bg-scale --randomize ~/Pictures/backgrounds/*"
+bindsym $mod+Shift+c exec ~/scripts/caps_to_esc
+
+# Scripts
+bindsym $mod+comma exec --no-startup-id ~/scripts/brightness down
+bindsym $mod+period exec --no-startup-id ~/scripts/brightness up
+bindsym $mod+Shift+s exec --no-startup-id ~/scripts/screenshot
+bindsym $mod+Shift+d exec --no-startup-id ~/scripts/define_word
+bindsym $mod+Shift+i exec --no-startup-id bash -c 'pgrep -x btop >/dev/null && pkill -x btop || ghostty -e btop'
+
+
+
+# ChatGPT
+bindsym $mod+a exec google-chrome-stable --app="https://chat.openai.com/"
+
+# YouTube
+bindsym $mod+y exec google-chrome-stable --app="https://www.youtube.com/"

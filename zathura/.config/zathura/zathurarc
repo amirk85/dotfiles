@@ -1,0 +1,15 @@
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 5
+
+set recolor true
+set recolor-keephue true
+
+# set show-statusbar true  # Removed: invalid option
+
+set default-bg "#1b1b1b"
+set default-fg "#f4e7c5"
+
+# mapping
+map K zoom in
+map J zoom out

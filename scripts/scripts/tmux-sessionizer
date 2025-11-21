@@ -1,0 +1,129 @@
+#!/usr/bin/env bash
+set -e  # Exit on any error
+
+# Script name for error messages
+SCRIPT_NAME=$(basename "$0")
+
+# Function to display usage
+usage() {
+    echo "Usage: $SCRIPT_NAME [DIRECTORY]"
+    echo "Opens or creates a tmux session based on the specified directory."
+    echo "If no directory is provided, you can select one using fzf."
+    echo ""
+    echo "Options:"
+    echo "  -h, --help     Show this help message and exit"
+}
+
+# Process command-line options
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -*)
+            echo "Error: Unknown option: $1" >&2
+            usage
+            exit 1
+            ;;
+        *)
+            # If it's not an option, it must be a directory
+            break
+            ;;
+    esac
+    shift
+done
+
+# Check for required dependencies
+check_dependencies() {
+    local missing=()
+    
+    for cmd in tmux fzf; do
+        if ! command -v "$cmd" &> /dev/null; then
+            missing+=("$cmd")
+        fi
+    done
+    
+    if [[ ${#missing[@]} -gt 0 ]]; then
+        echo "Error: The following required dependencies are missing:" >&2
+        for cmd in "${missing[@]}"; do
+            echo "  - $cmd" >&2
+        done
+        echo "Please install them before running this script." >&2
+        exit 1
+    fi
+}
+
+check_dependencies
+
+# Select directory
+if [[ $# -eq 1 ]]; then
+    selected=$1
+    # Ensure the provided directory exists
+    if [[ ! -d "$selected" ]]; then
+        echo "Error: Directory '$selected' does not exist." >&2
+        exit 1
+    fi
+else
+    # Use a more robust directory search with better error handling
+    search_dirs=(
+        "$HOME/personal"  # Default search location
+        "$HOME/projects"
+    )
+    
+    # Filter out non-existent directories
+    valid_dirs=()
+    for dir in "${search_dirs[@]}"; do
+        if [[ -d "$dir" ]]; then
+            valid_dirs+=("$dir")
+        fi
+    done
+    
+    if [[ ${#valid_dirs[@]} -eq 0 ]]; then
+        echo "Error: No valid search directories found." >&2
+        exit 1
+    fi
+    
+    # Find directories and handle errors
+    selected=$(find "${valid_dirs[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort | fzf --height 40% --reverse --prompt="Select directory: ")
+fi
+
+# Exit if no directory is selected
+if [[ -z "$selected" ]]; then
+    echo "No directory selected. Exiting."
+    exit 0
+fi
+
+# Generate session name by replacing non-alphanumeric characters
+selected_name=$(basename "$selected" | tr -c '[:alnum:]' '_')
+
+# Limit session name length to 32 characters (tmux limit)
+if [[ ${#selected_name} -gt 32 ]]; then
+    selected_name="${selected_name:0:32}"
+fi
+
+# First, check if the session already exists
+if tmux has-session -t="$selected_name" 2>/dev/null; then
+    # Session exists, just connect to it
+    if [[ -z "$TMUX" ]]; then
+        # Outside of tmux, attach to the session
+        echo "Attaching to existing tmux session: $selected_name"
+        exec tmux attach-session -t "$selected_name"
+    else
+        # Inside tmux, switch to the session
+        echo "Switching to existing tmux session: $selected_name"
+        exec tmux switch-client -t "$selected_name"
+    fi
+else
+    # Session doesn't exist, create a new one
+    if [[ -z "$TMUX" ]]; then
+        # Outside of tmux, create and attach
+        echo "Creating new tmux session: $selected_name"
+        exec tmux new-session -s "$selected_name" -c "$selected"
+    else
+        # Inside tmux, create and switch
+        echo "Creating new tmux session: $selected_name"
+        tmux new-session -d -s "$selected_name" -c "$selected"
+        exec tmux switch-client -t "$selected_name"
+    fi
+fi

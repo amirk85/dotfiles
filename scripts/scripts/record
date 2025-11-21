@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# record_controller.sh - Start/stop screen recording (NVENC)
+# Usage:
+#   ./record_controller.sh start [mic]
+#   ./record_controller.sh stop
+#   ./record_controller.sh status
+
+RECORD_DIR="$HOME/Videos/recording"
+PID_FILE="/tmp/record_game.pid"
+STATUS_FILE="/tmp/record_game.status"
+
+start_recording() {
+    if [[ -f "$PID_FILE" ]]; then
+        echo "Recording already in progress."
+        exit 1
+    fi
+
+    DATE=$(date +"%Y-%m-%d")
+    TIME=$(date +"%H-%M-%S")
+    OUTPUT_DIR="$RECORD_DIR/$DATE"
+    mkdir -p "$OUTPUT_DIR"
+
+    OUTPUT_FILE="$OUTPUT_DIR/recording_${TIME}.mkv"
+
+    SYSTEM_AUDIO=$(pactl get-default-sink)
+    MIC_SOURCE=$(pactl get-default-source)
+    SCREEN_SIZE=$(xrandr | awk '/\*/ {print $1; exit}')
+    FPS=60
+
+    CMD=(
+        ffmpeg
+        -y
+        -video_size "$SCREEN_SIZE"
+        -framerate "$FPS"
+        -f x11grab -i :0.0
+        -f pulse -i "$SYSTEM_AUDIO.monitor"
+    )
+
+    if [[ "$1" == "mic" ]]; then
+        CMD+=(
+            -f pulse -i "$MIC_SOURCE"
+            -filter_complex "[1:a][2:a]amix=inputs=2:duration=longest"
+            -map 0:v -map "[a]"
+        )
+    else
+        CMD+=(-map 0:v -map 1:a)
+    fi
+
+    CMD+=(
+        -c:v h264_nvenc -preset p5 -rc vbr -b:v 25M -maxrate 40M -bufsize 80M -pix_fmt yuv420p
+        -c:a aac -b:a 192k
+        -vsync 1 -async 1
+        "$OUTPUT_FILE"
+    )
+
+    echo "recording" > "$STATUS_FILE"
+    "${CMD[@]}" > /dev/null 2>&1 &
+    echo $! > "$PID_FILE"
+    echo "Recording started: $OUTPUT_FILE"
+}
+
+stop_recording() {
+    if [[ -f "$PID_FILE" ]]; then
+        kill -2 "$(cat "$PID_FILE")"   # SIGINT for clean stop
+        rm -f "$PID_FILE"
+        echo "stopped" > "$STATUS_FILE"
+        echo "Recording stopped."
+    else
+        echo "No recording in progress."
+    fi
+}
+
+status() {
+    if [[ -f "$PID_FILE" ]]; then
+        echo "%{F#FF0000}%{F-} REC"
+    else
+        echo " idle"
+    fi
+}
+
+case "$1" in
+    start) shift; start_recording "$@" ;;
+    stop) stop_recording ;;
+    status) status ;;
+    *) echo "Usage: $0 {start [mic]|stop|status}" ;;
+esac

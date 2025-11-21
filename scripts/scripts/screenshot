@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Directory to save screenshots
+SAVE_DIR="$HOME/Pictures/screenshots"
+mkdir -p "$SAVE_DIR"
+
+# Generate filename with timestamp
+FILENAME="screenshot_$(date +%Y%m%d_%H%M%S).png"
+FILEPATH="$SAVE_DIR/$FILENAME"
+
+# Take screenshot with flameshot and save directly to file
+flameshot gui -p "$FILEPATH" &
+
+# Capture PID of flameshot
+PID=$!
+
+# Wait for flameshot to finish
+wait "$PID"
+
+# Copy saved file to clipboard manually
+xclip -selection clipboard -t image/png -i "$FILEPATH"
+
+# Kill any leftover flameshot GUI processes (safe cleanup)
+pkill -f 'flameshot.*gui' 2>/dev/null
+
+echo "Screenshot saved to $FILEPATH and copied to clipboard."

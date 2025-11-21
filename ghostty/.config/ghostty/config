@@ -1,0 +1,12 @@
+theme = Catppuccin Mocha
+window-decoration = false
+gtk-titlebar = false
+#gtk-adwaita = false
+auto-update = check
+window-padding-x = 0
+window-padding-y = 0
+font-size = 14
+cursor-invert-fg-bg = true
+background-opacity = 0.95
+background-blur = true
+focus-follows-mouse = true

@@ -1,0 +1,11 @@
+[user]
+	name = amirk85
+	email = khanamir8589@gmail.com
+
+[core]
+    editor = nvim  # Change this to your preferred editor (vim, nano, etc.)
+    autocrlf = input  # Ensures proper line endings on Linux
+[init]
+	defaultBranch = main
+[fetch]
+	prune = true

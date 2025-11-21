@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Detect if Caps Lock is currently remapped to Escape
+if setxkbmap -print -verbose 10 | grep -q "caps:escape"; then
+    setxkbmap -option   # Clear all custom options
+    notify-send -t 2000 "Keyboard" "Caps Lock restored to normal"
+else
+    setxkbmap -option caps:escape
+    notify-send -t 2000 "Keyboard" "Caps Lock remapped to Escape"
+fi
