@@ -148,11 +148,3 @@ bindsym $mod+period exec --no-startup-id ~/scripts/brightness up
 bindsym $mod+Shift+s exec --no-startup-id ~/scripts/screenshot
 bindsym $mod+Shift+d exec --no-startup-id ~/scripts/define_word
 bindsym $mod+Shift+i exec --no-startup-id bash -c 'pgrep -x btop >/dev/null && pkill -x btop || ghostty -e btop'
-
-
-
-# ChatGPT
-bindsym $mod+a exec google-chrome-stable --app="https://chat.openai.com/"
-
-# YouTube
-bindsym $mod+y exec google-chrome-stable --app="https://www.youtube.com/"
