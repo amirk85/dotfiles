@@ -120,7 +120,7 @@ for_window [class="ghostty"] border pixel 2
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
-exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
+# exec --no-startup-id picom -b --config ~/.config/picom/picom.conf
 exec --no-startup-id xrandr --output HDMI-0 --mode 1920x1080 --rate 120
 exec --no-startup-id feh --bg-scale --randomize ~/Pictures/wallpapers/*
 exec --no-startup-id sh ~/.fehbg

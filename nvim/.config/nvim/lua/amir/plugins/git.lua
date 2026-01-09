@@ -21,15 +21,9 @@ return {
       local keymap = vim.keymap
       local gs = package.loaded.gitsigns
 
-      keymap.set("n", "<leader>gn", function()
-        gs.next_hunk()
-        gs.preview_hunk()
-      end, { desc = "Git next hunk" })
-
       keymap.set("n", "<leader>gp", function()
-        gs.prev_hunk()
         gs.preview_hunk()
-      end, { desc = "Git prev hunk" })
+      end, { desc = "Git preview hunk" })
     end,
   },
 }
